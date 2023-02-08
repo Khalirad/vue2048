@@ -1,0 +1,46 @@
+stages:
+  - dependances-stage
+  - type-stage
+  - analyse-stage
+  - package-stage
+  - tests-stage
+  - artifact-stage
+
+dependances-job:
+  stage: dependances-stage
+  script:
+    - echo "Identification des dépendances obsolètes"
+    - pnpm outdated --format json > test.json
+    - echo "Installation des dépendances du projet"
+    - pnpm install
+
+type-job:
+  stage: type-stage
+  script:
+    - echo "Vérification du typage statique du code" 
+    - pnpm type-check
+
+analyse-job:
+  stage: analyse-stage
+  script:
+    - echo "Analyse statique du code"
+    - pnpm eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore
+
+package-job:
+  stage: package-stage
+  script:
+    - echo "Construction du package à déployer" 
+    - pnpm vit build
+    - echo "Lancement du package créé" 
+    - pnpm vite preview
+
+tests-job:
+  stage: tests-stage
+  script:
+    - echo "Execution des tests"
+    - pnpm vitest
+
+artifact-job:
+  stage: artifact-stage
+  script:
+    - echo "Publication de l'artifact"
