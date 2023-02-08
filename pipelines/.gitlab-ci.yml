@@ -6,7 +6,11 @@ stages:
   - tests-stage
   - artifact-stage
 
-image: pnpm
+image: node:latest
+
+before_script:
+  - curl -f https://get.pnpm.io/v6.16.js | node - add
+  - pnpm config set store-dir .pnpm-store
 
 dependances-job:
   stage: dependances-stage
