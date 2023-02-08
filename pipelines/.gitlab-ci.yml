@@ -6,6 +6,8 @@ stages:
   - tests-stage
   - artifact-stage
 
+image: pnpm
+
 dependances-job:
   stage: dependances-stage
   script:
