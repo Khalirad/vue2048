@@ -8,16 +8,18 @@ stages:
 
 image: node:latest
 
-
 before_script:
-  - curl -f https://get.pnpm.io/v6.16.js | node - add
+  - curl -f https://get.pnpm.io/v6.16.js | node - add 
   - pnpm config set store-dir .pnpm-store
 
 dependances-job:
   stage: dependances-stage
   script:
     - echo "Installation des dépendances du projet"
-    - pnpm install
+    - pnpm install 
+  artifacts:
+    paths:
+      - "node_modules"
 
 type-job:
   stage: type-stage
