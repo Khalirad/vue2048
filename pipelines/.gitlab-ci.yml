@@ -16,8 +16,6 @@ before_script:
 dependances-job:
   stage: dependances-stage
   script:
-    - echo "Identification des dépendances obsolètes"
-    - pnpm outdated --format json > test.json
     - echo "Installation des dépendances du projet"
     - pnpm install
 
