@@ -18,7 +18,7 @@ dependances-job:
   script:
     - echo "Installation des dépendances du projet"
     - pnpm install 
-  artifacts:
+  cache:
     paths:
       - "node_modules"
 
