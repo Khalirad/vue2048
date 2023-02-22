@@ -1,10 +1,6 @@
 stages:
-  - dependances-stage
-  - type-stage
-  - analyse-stage
-  - package-stage
-  - tests-stage
-  - artifact-stage
+  - build
+  - quality
 
 image: node:latest
 
@@ -14,28 +10,28 @@ before_script:
 
 
 dependances-job:
-  stage: dependances-stage
+  stage: build
+  cache:
+    untracked: true
+    paths:
+      - /node_modules
   script:
     - echo "Installation des dépendances du projet"
     - pnpm install 
-  cache:
+  artifact:
     paths:
       - "node_modules"
 
 type-job:
-  stage: type-stage
+  stage: quality
   script:
     - echo "Vérification du typage statique du code" 
     - pnpm type-check
-
-analyse-job:
-  stage: analyse-stage
-  script:
     - echo "Analyse statique du code"
     - pnpm eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore
 
 package-job:
-  stage: package-stage
+  stage: build
   script:
     - echo "Construction du package à déployer" 
     - pnpm vit build
@@ -43,12 +39,13 @@ package-job:
     - pnpm vite preview
 
 tests-job:
-  stage: tests-stage
+  stage: quality
   script:
     - echo "Execution des tests"
     - pnpm vitest
+  parallel: 2
 
 artifact-job:
-  stage: artifact-stage
+  stage: quality
   script:
     - echo "Publication de l'artifact"
