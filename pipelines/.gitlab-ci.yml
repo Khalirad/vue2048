@@ -18,9 +18,6 @@ dependances-job:
   script:
     - echo "Installation des dépendances du projet"
     - pnpm install 
-  artifact:
-    paths:
-      - "node_modules"
 
 type-job:
   stage: quality
