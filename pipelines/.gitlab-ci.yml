@@ -40,7 +40,6 @@ tests-job:
   script:
     - echo "Execution des tests"
     - pnpm vitest
-  parallel: 2
 
 artifact-job:
   stage: quality
