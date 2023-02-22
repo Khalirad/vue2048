@@ -29,11 +29,11 @@ type-job:
 
 package-job:
   stage: build
+  needs:
+    - dependances-job
   script:
     - echo "Construction du package à déployer" 
-    - pnpm vit build
-    - echo "Lancement du package créé" 
-    - pnpm vite preview
+    - pnpm vite build
 
 tests-job:
   stage: quality
