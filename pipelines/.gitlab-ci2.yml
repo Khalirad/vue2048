@@ -1,0 +1,47 @@
+stages:
+  - build
+  - quality
+
+image: node:latest
+
+before_script:
+  - curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm@7
+  - pnpm config set store-dir .pnpm-store
+
+
+dependances-job:
+  stage: build
+  cache:
+    untracked: true
+    paths:
+      - /node_modules
+  script:
+    - echo "Installation des dépendances du projet"
+    - pnpm install 
+
+type-job:
+  stage: quality
+  script:
+    - echo "Vérification du typage statique du code" 
+    - pnpm type-check
+    - echo "Analyse statique du code"
+    - pnpm eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore
+
+package-job:
+  stage: build
+  needs:
+    - dependances-job
+  script:
+    - echo "Construction du package à déployer" 
+    - pnpm vite build
+
+tests-job:
+  stage: quality
+  script:
+    - echo "Execution des tests"
+    - pnpm vitest
+
+artifact-job:
+  stage: quality
+  script:
+    - echo "Publication de l'artifact"
