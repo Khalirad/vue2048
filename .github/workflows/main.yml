@@ -13,7 +13,7 @@ jobs:
      - name: setup node
        uses: actions/setup-node@v3
        with:
-        node-version: latest
+        node-version: 18
         cache: 'pnpm'
   build:
     runs-on: ubuntu-latest
@@ -42,5 +42,7 @@ jobs:
         run: |
           pnpm type-check 
           pnpm lint
-          
+      - name: unit tests
+        if: github.event_name == 'pull_request'
+        run: pnpm test
   
