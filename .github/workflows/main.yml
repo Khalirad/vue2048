@@ -1,5 +1,11 @@
 name: CI
-on: push
+
+on:
+ push:
+  branches:
+    - main
+    - lab9
+ workflow_dispatch:
 
 env:
   BUILD_ARTIFACT_NAME: "package"
