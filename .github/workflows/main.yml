@@ -16,6 +16,7 @@ jobs:
         node-version: latest
   build:
     runs-on: ubuntu-latest
+    needs: before
     name: build
     steps:
       - name: build
@@ -30,6 +31,7 @@ jobs:
   build_pull:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    needs: before
     steps:
       - name: build
         run: |
