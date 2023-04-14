@@ -5,7 +5,7 @@ env:
   BUILD_ARTIFACT_NAME: "package"
 
 jobs:
-  before:
+  build:
     runs-on: ubuntu-latest
     steps:
      - name: checkout
@@ -21,6 +21,7 @@ jobs:
        with:
         node-version: latest
         cache: pnpm
+        
      - name: build
        run: |
         pnpm install --no-frozen-lockfile
@@ -40,7 +41,7 @@ jobs:
        uses: actions/upload-artifact@v3
        with:
         name: ${{env.BUILD_ARTIFACT_NAME}}
-        paths: dist/
+        paths: dist/*
 
 
   
