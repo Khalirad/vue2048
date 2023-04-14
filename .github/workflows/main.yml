@@ -1,6 +1,15 @@
 name: CI
 on: push
 jobs:
+  before:
+    runs-on: ubuntu-latest
+    steps:
+     - name: checkout
+       uses: actions/checkout@v3
+     - name: pNPM setup
+       uses: DerYeger/pnpm-setup-action@master
+       with:
+        node-version: 16
   build:
     runs-on: ubuntu-latest
     name: build
