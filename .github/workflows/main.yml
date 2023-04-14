@@ -1,5 +1,8 @@
 name: CI
 on: push
+env:
+  BUILD_ARTIFACT_NAME: "package"
+
 jobs:
   before:
     runs-on: ubuntu-latest
@@ -10,39 +13,37 @@ jobs:
        uses: pnpm/action-setup@v2
        with:
         version: latest
+        
      - name: setup node
        uses: actions/setup-node@v3
        with:
         node-version: 18
         cache: 'pnpm'
+        
   build:
     runs-on: ubuntu-latest
     needs: before
-    name: build
     steps:
       - name: build
         run: |
           pnpm install
           pnpm build
-      - name: artifact
-        uses: actions/upload-artifact@v3
-        with:
-          paths: dist/*
           
-  build_pull:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    needs: before
-    steps:
-      - name: build
-        run: |
-          pnpm install
-          pnpm build
       - name: analyses
+        if: github.event_name == 'pull_request'
         run: |
           pnpm type-check 
           pnpm lint
+          
       - name: unit tests
         if: github.event_name == 'pull_request'
         run: pnpm test
+          
+      - name: artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{env.BUILD_ARTIFACT_NAME}}
+          paths: dist/
+      
+  
   
