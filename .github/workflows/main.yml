@@ -1,5 +1,6 @@
 name: CI
 on: push
+
 env:
   BUILD_ARTIFACT_NAME: "package"
 
@@ -9,6 +10,7 @@ jobs:
     steps:
      - name: checkout
        uses: actions/checkout@v3
+       
      - name: setup pnpm
        uses: pnpm/action-setup@v2
        with:
@@ -18,7 +20,7 @@ jobs:
        uses: actions/setup-node@v3
        with:
         node-version: 18
-        cache: 'pnpm'
+        cache: pnpm
         
   build:
     runs-on: ubuntu-latest
