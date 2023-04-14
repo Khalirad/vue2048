@@ -1,0 +1,32 @@
+name: CI
+on: |
+  push
+  workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: build
+    steps:
+      - name: build
+        run: |
+          pnpm install
+          pnpm build
+      - name: artifact
+        uses: actions/upload-artifact@v3
+        with:
+          paths: dist/*
+          
+  build_pull:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: build
+        run: |
+          pnpm install
+          pnpm build
+      - name: analyses
+        run: |
+          pnpm type-check 
+          pnpm lint
+          
+  
