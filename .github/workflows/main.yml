@@ -53,13 +53,11 @@ jobs:
        if: github.event_name == 'workflow_dispatch'
        env:
         name: qa
-        url: https://lemon-sky-0ff19c110.2.azurestaticapps.net
        run: pnpm dlx @azure/static-web-apps-cli deploy ./dist --app-name stapp-vue2048-qa --env=production
        
      - name: deploy-prod
        if: github.event_name == 'workflow_dispatch'
        env:
         name: production
-        url: https://delightful-mushroom-03f3a5d03.2.azurestaticapps.net
        run: pnpm dlx @azure/static-web-apps-cli deploy ./dist --app-name stapp-vue2048-prod --env=production
         
