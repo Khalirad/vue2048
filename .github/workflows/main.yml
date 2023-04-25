@@ -6,6 +6,8 @@ on:
     - main
     - lab9
  workflow_dispatch:
+ schedule:
+    - cron: '00 8 * * 1'
 
 env:
   BUILD_ARTIFACT_NAME: "package"
