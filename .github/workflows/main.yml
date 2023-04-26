@@ -62,24 +62,22 @@ jobs:
      - name: download artifact
        uses: dawidd6/action-download-artifact@v2
        with:
-        github_token: ${{secrets.AZURE_PROD_DEPLOY_TOKEN}}
+        github_token: ${{secrets.AZURE_DEPLOY_TOKEN}}
         name : 'package'
         
      - name: deploy-qa
-       # if: github.event_name == 'workflow_dispatch'
        uses: Azure/static-web-apps-deploy@v1
        with:
         action: 'upload'
         app_location: ${{github.workspace}}
-        azure_static_web_apps_api_token: 611ba899def2448338a8709c9620592487e77384aa6b9410545ff580078143df3-299e130f-1ec6-4d5b-afbd-89a3657b82d5003219106
+        azure_static_web_apps_api_token: ${{AZURE_QA_DEPLOY_TOKEN}}
         skip_app_build: true
 
      - name: deploy-prod
-       # if: github.event_name == 'workflow_dispatch'
        uses: Azure/static-web-apps-deploy@1a947af9992250f3bc2e68ad0754c0b0c11566c9
        with:
         action: 'upload'
         app_location: ${{github.workspace}}
-        azure_static_web_apps_api_token: 169626fb4952900cb1f34520bfab10902102594bb8ce89968bba593a522070de2-f54c5258-4dd0-497a-a1a4-86980acd3e55003206798
+        azure_static_web_apps_api_token: ${{secrets.AZURE_PROD_DEPLOY_TOKEN}}
         skip_app_build: true
         
