@@ -70,7 +70,7 @@ jobs:
        with:
         action: 'upload'
         app_location: ${{github.workspace}}
-        azure_static_web_apps_api_token: ${{AZURE_QA_DEPLOY_TOKEN}}
+        azure_static_web_apps_api_token: ${{secrets.AZURE_QA_DEPLOY_TOKEN}}
         skip_app_build: true
 
      - name: deploy-prod
