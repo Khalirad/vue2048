@@ -67,7 +67,7 @@ jobs:
           ARM_CLIENT_SECRET: "0Ar8Q~vbtIQRGvd9VSJ5BZLj.YhZjLOw2DMIlcvU"
           ARM_TENANT_ID:  "b98fe26d-6e8e-4e34-bfd2-dfaaf38d387e"
           ARM_SUBSCRIPTION_ID: "06b0c1bb-396b-4f9a-8ff4-c178cd318e62"
-          PULUMI_ACCESS_TOKEN: "pul-c56f23e95d88762a31464d963312af7aa711dc0d"
+          PULUMI_ACCESS_TOKEN: ""
     
 
 #  deploy-app:
