@@ -8,11 +8,6 @@ on:
     
 env:
   BUILD_ARTIFACT_NAME: "package"
-  ARM_CLIENT_ID: "d47d4878-9619-425d-8296-3c15a0dc0308"
-  ARM_CLIENT_SECRET: "0Ar8Q~vbtIQRGvd9VSJ5BZLj.YhZjLOw2DMIlcvU"
-  ARM_TENANT_ID:  "b98fe26d-6e8e-4e34-bfd2-dfaaf38d387e"
-  ARM_SUBSCRIPTION_ID: "06b0c1bb-396b-4f9a-8ff4-c178cd318e62"
-  PULUMI_ACCESS_TOKEN: "pul-c56f23e95d88762a31464d963312af7aa711dc0d"
 
 jobs:
   build:
@@ -45,6 +40,34 @@ jobs:
   deploy-infra:
     runs-on: ubuntu-latest
     steps:
+      -uses: actions/checkout@v3
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - name: Set node version to 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install
+        working_directory: infra
+        
+      - name: Provision infrastructure
+        uses: pulumi/actions@v4.2.1
+        with:
+          command: up
+          stack-name: teachingiac/ac-vue-2048/dev
+          work-dir: infra
+        env:
+          ARM_CLIENT_ID: "d47d4878-9619-425d-8296-3c15a0dc0308"
+          ARM_CLIENT_SECRET: "0Ar8Q~vbtIQRGvd9VSJ5BZLj.YhZjLOw2DMIlcvU"
+          ARM_TENANT_ID:  "b98fe26d-6e8e-4e34-bfd2-dfaaf38d387e"
+          ARM_SUBSCRIPTION_ID: "06b0c1bb-396b-4f9a-8ff4-c178cd318e62"
+          PULUMI_ACCESS_TOKEN: "pul-c56f23e95d88762a31464d963312af7aa711dc0d"
     
 
 #  deploy-app:
